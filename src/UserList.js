@@ -1,40 +1,27 @@
 import React from "react";
 
-function User({user}){
+function User({ user, onRemove, onToggle }) {
     return (
         <div>
-            <b>{user.username}</b> <span>({user.email})</span>
+            <b style={{
+                cursor: `pointer`,
+                color: user.active ? 'green' : 'black'
+            }}
+
+                onClick={() => onToggle(user.id)}>
+                {user.username}</b> <span>({user.email})</span>
+            <button onClick={() => onRemove(user.id)}>삭제</button>
         </div>
     )
 }
 
-function UserList(){
-    const users = [
-        {
-            id: 1,
-            username: 'DDIONG',
-            email: 'ddd.gmail.com'
-        },
-        {
-            id: 2,
-            username: 'KYEOM',
-            email: 'kkk.gmail.com'
-        },
-        {
-            id: 3,
-            username: 'MOOMIN',
-            email: 'mmm.gmail.com'
-        }
-    ];
+function UserList({ users, onRemove, onToggle }) {
 
     return (
         <div>
-            <div>
-            <User user={users[0]} /> 
-             {/*User 컴포넌트의 매개변수 객체 user로 user(배열)의 값을 전달  */}
-            <User user={users[1]} />
-            <User user={users[2]} />
-            </div>
+            {users.map(user => ( //users의 요소 하나하나를 user에 담아서
+                <User user={user} key={user.id} onRemove={onRemove} onToggle={onToggle} /> //User의 매개변수 user에 {user}를 대입?? 
+            ))}
         </div>
     );
 }
